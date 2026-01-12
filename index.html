@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive maps</title>
+    <meta name="description" content="PWA app" />
+    <meta name="theme-color" content="#009578" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      margin-top: 10px;
+      height: 85vh;
+      width: 100%;
+    }
+    .routes p {
+      margin-left: 20px;
+      display: inline-flex;
+    }
+    .routes button {
+      font-size: 15px;
+      height: 30px;
+    }
+    .routes select {
+      font-size: 15px;
+      height: 30px;
+    }
+    .stations,
+    .station_attachment {
+      padding-top: 10px;
+      font-size: 20px;
+      display: flex;
+    }
+    .station_attachment select {
+      margin-right: 20px;
+    }
+    .station_attachment button {
+      margin-left: 10px;
+      font-size: 15px;
+      height: 30px;
+    }
+    .checkbox-container {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    .work_mode {
+      padding-top: 10px;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+
+  <body>
+    <div class="work_mode">
+      <label for="work_mode_select">Выберите режим работы: </label>
+      <select name="work_mode" id="work_mode_select">
+        <option value="route_create" selected>Рисование нового маршрута</option>
+        <option value="existing_route_edit">Редактирование существующего маршрута</option>
+        <option value="station_attach">Добавление остановок</option>
+      </select>
+    </div>
+
+    <div class="stations" style="display: none">
+      <label for="station_name">Название остановки:</label>
+      <input id="station_name" type="text" />
+      <div class="checkbox-container"></div>
+      <button class="save-station">Сохранить остановку</button>
+    </div>
+
+    <div class="station_attachment" style="display: none">
+      <label for="route_number">Номер маршрута: </label>
+      <select id="route_number"></select>
+      <label for="route_direction">Направление: </label>
+      <select id="route_direction"></select>
+      <label for="show_stations">Отобразить все остановки:</label>
+      <input id="show_stations" type="checkbox" />
+      <button class="edit_current_route">Редактировать</button>
+    </div>
+    
+    <div class="routes" style="margin-top: 15px;">
+      <button class="draw-btn">Рисование маршрута</button>
+      <select name="draw-mode" id="draw-mode-select">
+        <option value="manual">Ручное рисование</option>
+        <option value="automatic" selected>Автоматическое рисование</option>
+      </select>
+      <button class="edit-btn">Редактирование маршрута</button>
+      <button class="save-btn">Сохранить маршрут</button>
+    </div>
+
+    <p class="info-message" style="color:rgb(140, 0, 255)">Здесь будет выводиться информация</p>
+
+    <div id="map" class="map-container"></div>
+    
+
+    <script src="https://unpkg.com/leaflet-geometryutil"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+    <script src="https://rawgit.com/bbecquet/Leaflet.RotatedMarker/master/leaflet.rotatedMarker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+    <script src="./map.js" type="module"></script>
+    <script src="./logic/work_mode.js"></script>
+    <script src="./logic/station_attach.js" type="module"></script>
+    <script src="./logic/route_edit.js" type="module"></script>
+    <script src="./logic/add_station.js" type="module"></script>
+    <script src="./style/marker_icons.js" type="module"></script>
+  </body>
+</html>
